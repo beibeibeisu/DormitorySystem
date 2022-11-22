@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjl.mapper.buildingMapper">
+<!--    List<building>findList();-->
+    <select id="findList" resultType="building">
+        select b.id,b.name,b.introduction,b.admin_id adminId,d.name adminName from building b
+        left join dormitory_admin d on b.admin_id=d.id
+    </select>
+<!--int updateOne(building building);-->
+    <update id="updateOne">
+        update building set name=#{name},introduction=#{introduction},admin_id=#{adminId}
+        where id =#{id}
+    </update>
+<!--    int insertOne(building building);-->
+    <insert id="insertOne">
+        insert into building values (null,#{name},#{introduction},#{adminId})
+    </insert>
+<!--    List<building>likeSearchByName(@Param("name")String name);-->
+    <select id="likeSearchByName" resultType="building">
+        select b.id,b.name,b.introduction,b.admin_id adminId,d.name adminName from building b
+        left join dormitory_admin d on b.admin_id=d.id where b.name like "%"#{name}"%"
+    </select>
+<!--    List<building>likeSearchByIntroduction(@Param("introduction")String introduction);-->
+    <select id="likeSearchByIntroduction" resultType="building">
+        select b.id,b.name,b.introduction,b.admin_id adminId,d.name adminName from building b
+        left join dormitory_admin d on b.admin_id=d.id where b.introduction like "%"#{introduction}"%"
+    </select>
+<!--    int deleteOneBuildingById(int id);-->
+    <delete id="deleteOneBuildingById">
+        delete from building where id =#{id}
+    </delete>
+<!--    List<building>findByAdminId(int id);-->
+    <select id="findByAdminId" resultType="building">
+        select b.id,b.name,b.introduction,b.admin_id adminId
+        from building b where b.admin_id=#{id}
+    </select>
+<!--    int findDormitoryAdminId(int buildingId);-->
+    <select id="findDormitoryAdminId" resultType="java.lang.Integer">
+        select admin_id from building where id=#{buildingId}
+    </select>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjl.mapper.moveoutMapper">
+<!-- int addOne(moveout moveout);-->
+    <insert id="addOne">
+        insert into moveout values (null,#{studentId},#{dormitoryId},#{reason},#{createDate})
+    </insert>
+<!--    List<moveout>getList();-->
+    <select id="getList" resultType="moveout">
+        select m.id id,m.student_id studentId,m.dormitory_id dormitoryId,m.reason reason,
+        m.create_Date createDate,
+        s.name studentName,d.name dormitoryName
+        from moveout m left join student s on m.student_id=s.id
+        left join dormitory d on  m.dormitory_id=d.id
+    </select>
+<!--    List<moveout>likeSearchByDormitoryName(String dormitoryName);-->
+    <select id="likeSearchByDormitoryName" resultType="moveout">
+        select m.id id,m.student_id studentId,m.dormitory_id dormitoryId,m.reason reason,
+               m.create_Date createDate,
+               s.name studentName,d.name dormitoryName
+        from moveout m left join student s on m.student_id=s.id
+                       left join dormitory d on  m.dormitory_id=d.id
+        where  d.name like "%"#{dormitoryName}"%"
+    </select>
+<!--    List<moveout>likeSearchByStudentName(String studentName);-->
+    <select id="likeSearchByStudentName" resultType="moveout">
+        select m.id id,m.student_id studentId,m.dormitory_id dormitoryId,m.reason reason,
+               m.create_Date createDate,
+               s.name studentName,d.name dormitoryName
+        from moveout m left join student s on m.student_id=s.id
+                       left join dormitory d on  m.dormitory_id=d.id
+        where  s.name like "%"#{studentName}"%"
+    </select>
+</mapper>

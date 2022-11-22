@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjl.mapper.absentMapper">
+<!--    List<absent>findList();-->
+    <select id="findList" resultType="absent">
+        select a.id id,a.student_id studentId,a.building_id buildingId,a.dormitory_id
+    dormitoryId,a.dormitory_admin_id dormitoryAdminId ,a.create_Date createDate ,
+    a.reason reason,s.name studentName,d.name dormitoryName,b.name buildingName,
+    da.name dormitoryAdminName
+    from absent a
+        left join student s on a.student_id=s.id
+        left join dormitory d on a.dormitory_id=d.id
+        left join building b on a.building_id=b.id
+        left join dormitory_admin da on a.dormitory_admin_id=da.id
+    </select>
+<!--    List<absent>likeSearchByBuildingName(String buildingName);-->
+    <select id="likeSearchByBuildingName" resultType="absent">
+        select a.id id,a.student_id studentId,a.building_id buildingId,a.dormitory_id
+                    dormitoryId,a.dormitory_admin_id dormitoryAdminId ,a.create_Date createDate ,
+               a.reason reason,s.name studentName,d.name dormitoryName,b.name buildingName,
+               da.name dormitoryAdminName
+        from absent a
+                 left join student s on a.student_id=s.id
+                 left join dormitory d on a.dormitory_id=d.id
+                 left join building b on a.building_id=b.id
+                 left join dormitory_admin da on a.dormitory_admin_id=da.id
+        where b.name like "%"#{buildingName}"%"
+    </select>
+<!--     List<absent>likeSearchByDormitoryName(String dormitoryName);-->
+    <select id="likeSearchByDormitoryName" resultType="absent">
+        select a.id id,a.student_id studentId,a.building_id buildingId,a.dormitory_id
+                    dormitoryId,a.dormitory_admin_id dormitoryAdminId ,a.create_Date createDate ,
+               a.reason reason,s.name studentName,d.name dormitoryName,b.name buildingName,
+               da.name dormitoryAdminName
+        from absent a
+                 left join student s on a.student_id=s.id
+                 left join dormitory d on a.dormitory_id=d.id
+                 left join building b on a.building_id=b.id
+                 left join dormitory_admin da on a.dormitory_admin_id=da.id
+        where d.name like "%"#{dormitoryName}"%"
+    </select>
+<!--    int insertOne(absent absent);-->
+    <insert id="insertOne">
+        insert into absent values (null,#{buildingId},#{dormitoryId},#{studentId},#{dormitoryAdminId},#{createDate},#{reason})
+    </insert>
+</mapper>

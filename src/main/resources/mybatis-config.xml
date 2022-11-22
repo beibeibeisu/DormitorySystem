@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+    <!--    引入查询类-->
+    <typeAliases>
+        <package name="com.fjl.pojo"/>
+    </typeAliases>
+    <plugins>
+        <!--设置分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+    <!--引入映射文件-->
+    <mappers>
+        <package name="com.fjl.mapper"/>
+    </mappers>
+</configuration>

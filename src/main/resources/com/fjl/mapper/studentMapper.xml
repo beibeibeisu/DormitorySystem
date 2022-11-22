@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjl.mapper.studentMapper">
+    <resultMap id="students" type="student">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <result property="gender" column="gender"/>
+        <result property="dormitoryId" column="dormitory_id"/>
+        <result property="state" column="state"/>
+        <result property="createDate" column="create_date"/>
+        <association property="dormitoryName" select="com.fjl.mapper.dormitoryMapper.findOneById" column="dormitory_id"/>
+    </resultMap>
+<!--    List<student>list();-->
+    <select id="list" resultMap="students">
+        select *from student
+    </select>
+<!--    int deleteOne(int id);-->
+    <delete id="deleteOne">
+        delete from student where id=#{id};
+    </delete>
+<!--   int insertOne(student student); -->
+    <insert id="insertOne">
+        insert into student values (null,#{number},#{name},#{gender},#{dormitoryId},#{state},#{createDate});
+    </insert>
+<!--int updateOne(student student);-->
+    <update id="updateOne">
+        update student set number=#{number},name=#{name},gender=#{gender},dormitory_id=#{dormitoryId}
+        where id=#{id};
+    </update>
+<!--    List<student>searchByNumber(@Param("number") String number);-->
+    <select id="searchByNumber" resultMap="students">
+        select *from student where number like "%"#{number}"%";
+    </select>
+<!--        List<student>searchByName(@Param("name")String name);-->
+    <select id="searchByName" resultMap="students">
+        select *from student where name like "%"#{name}"%";
+    </select>
+<!--    List<Integer>findStudentByDormitoryId(int dormitoryId);-->
+    <select id="findStudentByDormitoryId" resultType="java.lang.Integer">
+        select id from student where dormitory_id=#{dormitoryId}
+    </select>
+<!--    int updateDormitoryId(int studentId,int dormitoryId);-->
+    <update id="updateDormitoryId">
+        update student set dormitory_id =#{dormitoryId} where id=#{studentId}
+    </update>
+<!--    int updateOneState(int id);-->
+    <update id="updateOneState">
+        update student set state='迁出' where id=#{id}
+    </update>
+<!--    List<student>findStudentByDormitoryId02(int dormitoryId);-->
+    <select id="findStudentByDormitoryId02" resultType="student">
+        select id,name from student where dormitory_id=#{dormitoryId}
+    </select>
+</mapper>

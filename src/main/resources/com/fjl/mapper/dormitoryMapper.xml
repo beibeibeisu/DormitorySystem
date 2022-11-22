@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjl.mapper.dormitoryMapper">
+<!--String findOneById(Integer dormitoryId);-->
+    <select id="findOneById" resultType="java.lang.String">
+        select name from dormitory where id =#{dormitoryId};
+    </select>
+<!--    List<dormitory>isAvailable();-->
+    <select id="isAvailable" resultType="dormitory">
+        select *
+        from dormitory where available>0;
+    </select>
+<!--    int updateAddAvailable(int dormitoryId);-->
+    <update id="updateAddAvailable">
+        update dormitory set available=available+1 where id =#{dormitoryId};
+    </update>
+<!--    int updateDeclineAvailable(int dormitoryId);-->
+    <update id="updateDeclineAvailable">
+        update dormitory set available=available-1 where id=#{dormitoryId};
+    </update>
+<!--    List<dormitory>findByBuildingId(int buildingId);-->
+    <select id="findByBuildingId" resultType="java.lang.Integer">
+        select id from dormitory where building_id =#{buildingId}
+    </select>
+<!--    List<Integer> findOneAvailable();-->
+    <select id="findOneAvailable" resultType="java.lang.Integer">
+        select id from dormitory where available >0 ;
+    </select>
+<!--    int deleteOneByDormitoryId(int id);-->
+    <delete id="deleteOneByDormitoryId">
+        delete from dormitory where id =#{id}
+    </delete>
+<!--    List<dormitory>listAndBuildingName();-->
+    <select id="listAndBuildingName" resultType="dormitory">
+        select d.id id ,d.building_id buildingId,d.name name,d.type type,d.available available,
+               d.telephone telephone ,b.name buildingName from dormitory d left join building b
+            on d.building_id=b.id;
+    </select>
+<!--    int insetOneDormitory(dormitory dormitory);-->
+    <insert id="insetOneDormitory" >
+        insert into dormitory values (null,#{buildingId},#{name},#{type},#{type},#{telephone})
+    </insert>
+<!--    int updateOneById(dormitory dormitory);-->
+    <update id="updateOneById">
+        update dormitory set name=#{name},telephone=#{telephone} where id =#{id}
+    </update>
+<!--    List<dormitory>likeSearchByName(String name);-->
+    <select id="likeSearchByName" resultType="dormitory">
+        select d.id id ,d.building_id buildingId,d.name name,d.type type,d.available available,
+               d.telephone telephone ,b.name buildingName from dormitory d left join building b
+                on d.building_id=b.id where d.name like "%"#{name}"%";
+    </select>
+<!--    List<dormitory>likeSearchByTelephone(String telephone);-->
+    <select id="likeSearchByTelephone" resultType="dormitory">
+        select d.id id ,d.building_id buildingId,d.name name,d.type type,d.available available,
+               d.telephone telephone ,b.name buildingName from dormitory d left join building b
+                on d.building_id=b.id where d.telephone like "%"#{telephone}"%";
+    </select>
+<!--    List<dormitory>findByBuildingId02(int buildingId);-->
+    <select id="findByBuildingId02" resultType="dormitory">
+        select id,name from dormitory where building_id =#{buildingId}
+    </select>
+</mapper>

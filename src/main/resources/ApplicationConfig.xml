@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!--    连接数据库连接池  sqlsessionfactorybean 扫描注解包-->
+    <import resource="spring-mapper.xml"></import>
+<!--    事务管理器  -->
+    <import resource="spring-service.xml"></import>
+<!--   静态资源处理器 视图解析器 mvc注解驱动  -->
+    <import resource="spring-mvc.xml"></import>
+</beans>
